@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "express-sqlite-charts.fullname" . }}
+  labels:
+    app: {{ include "express-sqlite-charts.name" . }}
+spec:
+  replicas: {{ .Values.sqlite.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "express-sqlite-charts.name" . }}
+    spec:
+      containers:
+        - name: sqlite
+          image: "{{ .Values.sqlite.image.repository }}:{{ .Values.sqlite.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.sqlite.port }}
+          # Ajoutez d'autres configurations spécifiques à SQLite ici
